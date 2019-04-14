@@ -9,9 +9,28 @@
     <h1>Mapa</h1>
     <div id="map" style="width: 600px; height: 400px"></div>
 
-    <script
-        src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js">
+    <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+    <script>
+        function inicializar(){
+            var map = L.map('map').setView([-17.0568696, -64.9912286], 3);
+
+            var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+
+            L.tileLayer(
+                'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; ' + mapLink + ' Contributors',
+                maxZoom: 18,
+                }).addTo(map);
+
+            var buyerData = '{"Ubicaciones" : [{ "name" : "TESTTCXPGWCR", "lat" : "-27.783357", "long" : "-64.264167"},{ "name" : "Fede Luna", "lat" : "-34.5423741", "long" : "-58.4427648"}]}';
+            var marks = JSON.parse(buyerData);
+
+            for (var i = 0; i < Object.keys(marks.Ubicaciones).length; i++) {
+                marker = new L.marker([marks.Ubicaciones[i].lat,marks.Ubicaciones[i].long]).bindPopup(marks.Ubicaciones[i].name).addTo(map);
+            }
+        }
+
+        window.onload = inicializar;
     </script>
-    <script src="js/script.js"></script>
 </body>
 </html>
