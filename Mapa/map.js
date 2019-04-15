@@ -19,13 +19,13 @@ fs.readFile('../ServerFede/token.json', function(err, data) {
                     lat = JSON.stringify(bodi.results[i].shipping.receiver_address.latitude);
                     long = JSON.stringify(bodi.results[i].shipping.receiver_address.longitude);
                     latlong = '{ "name" : ' + name + ', "lat" : "' + lat + '", "long" : "'+ long + '"}' + '\n';
-                    fs.appendFile('./buyerData.json',latlong, function (err) {if (err) throw err;});     
+                    fs.appendFile('../GMap/buyerData.json',latlong, function (err) {if (err) throw err;});     
                 }
             }else{
                 console.log('error indefinido');    
             }    
         }else{
-            console.log('error');
+            console.log('error '+ statusCode);
         }
     });
 });

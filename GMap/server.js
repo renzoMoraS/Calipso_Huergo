@@ -19,7 +19,20 @@ var server = http.createServer(function(request, response) {
                     response.end();  
                 }  
             });  
-            break;  
+            break;
+        case '/buyerData.json':
+            response.writeHead(200, {  
+                'Content-Type': 'application/json'  
+            });  
+
+            fs.readFile('./buyerData.json', function (err, data) {
+                if (err) throw err;
+                var bd = JSON.parse(data);  
+                response.end(JSON.stringify(bd));
+              });
+                
+            break;
     }  
 });  
+
 server.listen(8082); 
