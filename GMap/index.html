@@ -1,43 +1,6 @@
-<!DOCTYPE html>
 <html>
-<head>
-    <title>Map</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
-    <script
-  src="https://code.jquery.com/jquery-3.4.0.min.js"
-  integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
-  crossorigin="anonymous"></script>
-</head>
-<body>
-    <h1>Mapa</h1>
-    <div id="map" style="width: 600px; height: 400px"></div>
-
-    <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
-    <script>
-        function inicializar(){
-            var map = L.map('map').setView([-17.0568696, -64.9912286], 3);
-
-            var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-
-            L.tileLayer(
-                'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; ' + mapLink + ' Contributors',
-                maxZoom: 18,
-                }).addTo(map);
-            
-            $.getJSON(
-                'http://localhost:8082/buyerData.json', 
-                function(data) {
-
-                    for (var i = 0; i <= Object.keys(data.Address).length; i++) {
-                        marker = new L.marker([data.Address[i].lat,data.Address[i].long]).bindPopup(data.Address[i].name).addTo(map);
-                    }
-                }
-            );
-        }
-
-        window.onload = inicializar;
-    </script>
-</body>
+   <body>
+         <a href="https://auth.mercadolibre.com.ar/authorization?client_id=4069477448135367&response_type=code&state=5ca75bd30">
+         Ingresar a mi cuenta de mercadolibre para autorizar a la app a que se conecte con mis credenciales, y que mercadolibre le de un auth_code, para que luego, detrás de las cortinas, entre la app y mercadolibre, negocien un token que permitirá a la app trabajar cómodamente.</a>
+   </body>
 </html>
