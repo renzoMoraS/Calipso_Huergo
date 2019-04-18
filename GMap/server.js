@@ -4,6 +4,7 @@ var http = require('http');
 var request = require('request')
 var fs = require('fs');
 var express = require('express');
+var map = require('./js/map');
 
 var app = express(); 
 app.use(cookieParser())
@@ -40,7 +41,6 @@ app.get('/index.html', function (req, res) {
     console.log('uuid_sesion: '+uuid_sesion)
 })
 
-
 app.get('/logued_in', function (req, res) {
     session_cookie = req.cookies['session_id'] 
     console.log(session_cookie); 
@@ -56,24 +56,28 @@ app.get('/logued_in', function (req, res) {
     console.log('pido token\n')
 
     var req = request.post(options, preguntarAML);
-    res.send('<input type="button" onclick="location.href=\'http://localhost:8081/map.html\'" value="Mapa" />') 
+    map.buscarCompradores();
+    res.send('<input type="button" onclick="location.href=\'http://localhost:8081/map.html\';" value="Abrir Mapa" /> \n <input type="button" onclick="location.href=\'http://localhost:8081/cattime.html\';" value="V. por Cat. y Tiempo" />')
+})
+
+app.get('/cattime.html', function (req, res) {
+    res.sendFile( __dirname + "/" + "cattime.html" );    
 })
 
 app.get('/buyerData.json',function(req,response){
-            response.writeHead(200, {  
-                'Content-Type': 'application/json'  
-            });  
+    response.writeHead(200, {  
+        'Content-Type': 'application/json'  
+    });  
 
-            fs.readFile('json/buyerData.json', function (err, data) {
-                if (err) throw err;
-                var bd = JSON.parse(data);  
-                response.end(JSON.stringify(bd));
-            });
+    fs.readFile('./json/buyerData.json', function (err, data) {
+        if (err) throw err;
+        var bd = JSON.parse(data);  
+        response.end(JSON.stringify(bd));
+    });
 })
 
 app.get('/map.html', function (req, res) {
-    res.sendFile( __dirname + "/" + "map.html" ); 
-    
+    res.sendFile( __dirname + "/" + "map.html" );    
 })
 
 var server = app.listen(8081, function () {

@@ -16,6 +16,7 @@
     <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
     <script>
         function inicializar(){
+            
             var map = L.map('map').setView([-17.0568696, -64.9912286], 3);
 
             var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
@@ -29,8 +30,9 @@
             $.getJSON(
                 'http://localhost:8081/buyerData.json', 
                 function(data) {
-
-                    for (var i = 0; i <= Object.keys(data.Address).length; i++) {
+                    console.log(Object.keys(data.Address).length)
+                    for (var i = 0; i < Object.keys(data.Address).length; i++) {
+                        console.log(data.Address[i])
                         marker = new L.marker([data.Address[i].lat,data.Address[i].long]).bindPopup(data.Address[i].name).addTo(map);
                     }
                 }
