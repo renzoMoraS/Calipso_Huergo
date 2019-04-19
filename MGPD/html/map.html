@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapa</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>MAPA DE COMPRADORES</h1>
+    <div id="map" style="width: 600px; height: 400px"></div>
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+    <script>
+        function inicializar(){
+            
+            var map = L.map('map').setView([-17.0568696, -64.9912286], 3);
+
+            var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+
+            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; ' + mapLink + ' Contributors',
+                maxZoom: 18,
+                }).addTo(map);
+            
+            $.getJSON('http://localhost:8081/buyerData.json', function(data) {
+                    console.log(Object.keys(data.Address).length)
+                    for (var i = 0; i < Object.keys(data.Address).length; i++) {
+                        console.log(data.Address[i])
+                        marker = new L.marker([data.Address[i].lat,data.Address[i].long]).bindPopup(data.Address[i].name).addTo(map);
+                    }
+                }
+            );
+        }
+
+        window.onload = inicializar;
+    </script>
+</body>
+</html>

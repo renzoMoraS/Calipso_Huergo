@@ -1,2 +1,6 @@
 # Calipso_Huergo
-It's a project for the enterprise Calipso from the Huergo High School students...
+This is a project from the Luis A. Huergo Institute students to the enterprise Calipso using:
+
+    - Mercadolibre's API.
+    - HTML, CSS, JavaScript.
+    - NodeJs.
