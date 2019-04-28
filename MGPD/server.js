@@ -30,6 +30,7 @@ var options = {
 ////////FUNCTIONS////////
 var preguntarAML = function(error,response,body) {
   fs.writeFile('./json/token.json',body, function (err) {if (err) throw err;});
+  map.buscarCompradores();
   console.log(body); 
   console.log(error); 
 }
@@ -59,7 +60,6 @@ app.get('/logued_in', function (req, res) {
     console.log('pido token\n')
 
     var req = request.post(options, preguntarAML);
-    map.buscarCompradores();
     res.send('<input type="button" onclick="location.href=\'http://localhost:8081/map.html\';" value="Abrir Mapa" /> <input type="button" onclick="location.href=\'http://localhost:8081/cattime.html\';" value="V. por Cat. y Tiempo" /> <input type="button" onclick="location.href=\'http://localhost:8081/disexp.html\';" value="Dist. por Exposicion" />')
 })
 
