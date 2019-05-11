@@ -34,17 +34,40 @@
             var markerClusters = L.markerClusterGroup();
 
             $.getJSON('http://localhost:8081/buyerData.json', function(data) {
+                var cant = 0;
+                var scant;
+                var lats = [];
+                var same = false; 
                     for (var i = 0; i < Object.keys(data.Address).length; i++) {
+                        cant = 0;
                         if (data.Address[i].lat != 'null' || data.Address[i].long != 'null') {
-                            console.log(data.Address[i]);
- 
-                            var m = L.marker(new L.LatLng(parseFloat(data.Address[i].lat), parseFloat(data.Address[i].long))).bindPopup();
+                            for (s = 0; s < Object.keys(data.Address).length; s++) {
+                                if (data.Address[s].lat != 'null' || data.Address[s].long != 'null') {
+                                    if (data.Address[i].lat == data.Address[s].lat) {
+                                        cant++;
+                                    }
+                                }
+                            }
 
-                            markerClusters.addLayer( m );
                         }
- 
-                    map.addLayer( markerClusters );
+                        for (var j = 0; j < lats.length; j++) {
+                            if (lats[j] == data.Address[i].lat) {
+                                same = true;
+                                break;
+                            }    
+                        }
+                            
+                            if (same == false) {
+                                scant = cant.toString();
+                                var m = L.marker(new L.LatLng(parseFloat(data.Address[i].lat), parseFloat(data.Address[i].long))).bindPopup(scant);
+                                
+                                markerClusters.addLayer( m );
+                                lats.push(data.Address[i].lat)
+                            }
+                            
+                        
                     }
+                    map.addLayer( markerClusters );
             });
         }
 

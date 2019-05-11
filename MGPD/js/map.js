@@ -9,12 +9,11 @@ exports.buscarCompradores=function(){
         var burl = "https://api.mercadolibre.com/orders/search?seller="+ my_token["user_id"] +"&order.status=paid&access_token="+ my_token["access_token"];
 
         request({url: burl,json: true}, function (error, response, bodi) {
-            var name;
             var lat;
             var long;
             var latlong;
             var cont = 0;
-            var same = false;
+            var cant = 0;
 		    if (!error && response.statusCode === 200) {
                 fs.writeFile('./json/buyerData.json','{"Address":[]}', function (errore) {if (errore) throw errore;});
                 
@@ -27,11 +26,13 @@ exports.buscarCompradores=function(){
                             if (bodi.results[i].shipping.receiver_address != undefined && bodi.results[i].shipping.receiver_address.id != null){
                                 lat = JSON.stringify(bodi.results[i].shipping.receiver_address.latitude);
                                 long = JSON.stringify(bodi.results[i].shipping.receiver_address.longitude);
-                                latlong = {"lat" : lat , "long" : long };
+                                console.log(bjason.Address.length)
                             
+                                latlong = {"lat" : lat , "long" : long };
                                 bjason.Address[cont] = latlong;
                                 fs.writeFile('./json/buyerData.json',JSON.stringify(bjason), function (errore) {if (errore) throw errore;});
-                                cont++;
+                                cont++; 
+                
                             }else{console.log('No se puede saber la ubicacion del comprador');}
              
                         }
@@ -42,3 +43,9 @@ exports.buscarCompradores=function(){
         });
     });
 }
+
+//for (s = 0; s < bjason.Address.length; s++) {
+//    if (bodi.results[s].shipping.receiver_address.latitude == lat && bodi.results[s].shipping.receiver_address.longitude == long) {
+        
+//    }
+//}
